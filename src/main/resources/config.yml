@@ -1,0 +1,3 @@
+# The period that the server checks for squid that are not in water, in ticks (20 ticks for a second).
+# The default settings is to check every 100 ticks (5 seconds).
+squid-check-interval: 100

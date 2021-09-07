@@ -10,9 +10,11 @@ import org.bukkit.block.data.Waterlogged;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Squid;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 public class MovementChecker extends BukkitRunnable {
   private Main plugin;
+  private BukkitTask task;
 
   public MovementChecker(Main plugin) {
     this.plugin = plugin;
@@ -46,6 +48,14 @@ public class MovementChecker extends BukkitRunnable {
       }
     };
     return null;
+  };
+
+  public void start(long interval) {
+    task = this.runTaskTimer(plugin, 0L, interval);
+  };
+
+  public void stop() {
+    task.cancel();
   };
 
   @Override

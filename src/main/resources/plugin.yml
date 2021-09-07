@@ -3,9 +3,9 @@ version: 0.0.1
 author: Xenapte
 main: info.bcrc.mc.squid_saver.Main
 api-version: 1.17
-# commands:
-#   opgear:
-#     description: Give OP gears to players.
-#     usage: /opgear <player>
-#     permission: opgear.permission
-#     permission-message: You don't have permission to run this command!
+commands:
+  squid:
+    description: SquidSaver plugin settings.
+    usage: /squid || /squid <setinterval> <interval> || /squid reload
+    permission: squidsaver.permission
+    permission-message: You don't have the permission to run this command! 
