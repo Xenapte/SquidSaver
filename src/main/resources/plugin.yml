@@ -6,6 +6,6 @@ api-version: 1.17
 commands:
   squid:
     description: SquidSaver plugin settings.
-    usage: /squid || /squid <setinterval> <interval> || /squid reload
+    usage: /squid || /squid setinterval <interval> || /squid reload
     permission: squidsaver.permission
     permission-message: You don't have the permission to run this command! 

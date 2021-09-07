@@ -31,25 +31,4 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
-        
-    <build>
-        <plugins>
-            <plugin>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <configuration>
-                    <tasks>
-                        <copy file="target/SquidSaver-0.0.1.jar" todir="D:/server/201124/plugins"/>
-                    </tasks>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>install</phase>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
 </project>
