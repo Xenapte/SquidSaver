@@ -41,7 +41,7 @@ public class MovementChecker extends BukkitRunnable {
         for (int z1 = -1; z1 <= 1; z1 ++) {
           Location blockLocation = new Location(world, x + x1, y + y1, z + z1);
           if (hasWater(blockLocation))
-            return blockLocation;
+            return blockLocation.getBlock().getLocation().add(0.5, 0, 0.5);
         };
       }
     };
