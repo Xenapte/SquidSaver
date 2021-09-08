@@ -11,7 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class SquidSaverPlugin extends JavaPlugin {
   private MovementChecker checker;
-  FileConfiguration config;
+  private FileConfiguration config;
   private long checkInterval;
 
   private void loadConfig() {

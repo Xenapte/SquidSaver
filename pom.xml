@@ -4,15 +4,16 @@
 
     <artifactId>SquidSaver</artifactId>
     <groupId>info.bcrc.mc</groupId>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
 	
 	<properties>
-		<maven.compiler.source>11</maven.compiler.source>
-		<maven.compiler.target>11</maven.compiler.target>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.release>8</maven.compiler.release>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-
 	
+
     <!--Repositories-->
     <repositories>
         <repository>

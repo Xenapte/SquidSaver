@@ -15,9 +15,11 @@ import org.bukkit.scheduler.BukkitTask;
 public class MovementChecker extends BukkitRunnable {
   private SquidSaverPlugin plugin;
   private BukkitTask task;
+  private int gameVersion;
 
   public MovementChecker(SquidSaverPlugin plugin) {
     this.plugin = plugin;
+    gameVersion = Integer.parseInt(plugin.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3].replace("v1_", "").replaceAll("_R\\d", ""));
   };
 
   private boolean hasWater(Location location) {
@@ -25,8 +27,16 @@ public class MovementChecker extends BukkitRunnable {
     if (block == null)
       return false;
 
+    if (gameVersion < 13) {
+      if (block.isLiquid() && !block.getType().equals(Material.LAVA))
+        return true;
+
+      return false;
+    };
+
     if (block.getType().equals(Material.WATER))
       return true;
+
     if (block instanceof Waterlogged)
       return ((Waterlogged) block).isWaterlogged();
 
