@@ -13,10 +13,10 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 public class MovementChecker extends BukkitRunnable {
-  private Main plugin;
+  private SquidSaverPlugin plugin;
   private BukkitTask task;
 
-  public MovementChecker(Main plugin) {
+  public MovementChecker(SquidSaverPlugin plugin) {
     this.plugin = plugin;
   };
 

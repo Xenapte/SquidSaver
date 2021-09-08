@@ -1,7 +1,7 @@
 name: SquidSaver
 version: 0.0.1
 author: Xenapte
-main: info.bcrc.mc.squid_saver.Main
+main: info.bcrc.mc.squid_saver.SquidSaverPlugin
 api-version: 1.17
 commands:
   squid:

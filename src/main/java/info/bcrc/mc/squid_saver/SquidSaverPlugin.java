@@ -9,12 +9,15 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class Main extends JavaPlugin {
+public class SquidSaverPlugin extends JavaPlugin {
   private MovementChecker checker;
   FileConfiguration config;
   private long checkInterval;
 
   private void loadConfig() {
+    if (config != null)
+      reloadConfig();
+
     config = getConfig();
     config.addDefault("squid-check-interval", 100);
 
@@ -67,6 +70,7 @@ public class Main extends JavaPlugin {
                 sender.sendMessage(ChatColor.RED + "[SquidSaver] Falling back to the default settings.");
               };
               config.set("squid-check-interval", checkInterval);
+              saveConfig();
               showStatus(sender);
               reload();
               return true;
