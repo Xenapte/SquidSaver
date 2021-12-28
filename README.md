@@ -1,6 +1,6 @@
 # SquidSaver
 
-A Minecraft spigot plugin to prevent squids from dying on land. Supports Minecraft version **1.5 ~ 1.17**.
+A Minecraft spigot plugin to prevent squids from dying on land all the time (by teleporting squids near the water back). Supports Minecraft version **1.5 ~ 1.18**.
 
 Due to [MC-132473](https://bugs.mojang.com/browse/MC-132473), squids swimming near the shores usually end up on the land, where they cannot move again and eventually die to suffocation. This is particularly annoying if one bases near a river or ocean (constant squid hurt/death sounds and random ink sac items on the ground).
 
@@ -8,7 +8,7 @@ This plugin is a very primitive implementation for the goal of preventing them f
 
 ## Configuration
 
-- `squid-check-interval`: the period which the server checks for squids out of the water.
+- `squid-check-interval`: the time interval which the server checks for squids out of the water.
 
 ## Commands
 
