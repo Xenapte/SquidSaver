@@ -1,8 +1,8 @@
 name: SquidSaver
-version: 0.0.2
+version: 0.0.4
 author: Xenapte
 main: info.bcrc.mc.squid_saver.SquidSaverPlugin
-api-version: 1.13
+api-version: 1.13   # 1.13 for cross-version compatibility
 commands:
   squid:
     description: SquidSaver plugin settings.

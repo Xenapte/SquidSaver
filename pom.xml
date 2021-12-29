@@ -4,7 +4,7 @@
 
     <artifactId>SquidSaver</artifactId>
     <groupId>info.bcrc.mc</groupId>
-    <version>0.0.2</version>
+    <version>0.0.4</version>
 	
 	<properties>
 		<maven.compiler.source>1.8</maven.compiler.source>

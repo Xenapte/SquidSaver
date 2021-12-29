@@ -1,38 +1,25 @@
 package info.bcrc.mc.squid_saver;
 
-import java.util.List;
-
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Waterlogged;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.GlowSquid;
 import org.bukkit.entity.Squid;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 
-public class MovementChecker extends BukkitRunnable {
-  private SquidSaverPlugin plugin;
-  private BukkitTask task;
-  private int gameVersion;
+public class MovementChecker {
+  protected SquidSaverPlugin plugin;
 
   public MovementChecker(SquidSaverPlugin plugin) {
     this.plugin = plugin;
-    gameVersion = Integer.parseInt(plugin.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3].replace("v1_", "").replaceAll("_R\\d", ""));
   };
 
-  private boolean hasWater(Location location) {
+  protected boolean hasWater(Location location) {
     Block block = location.getBlock();
     if (block == null)
       return false;
-
-    if (gameVersion < 13) {
-      if (block.isLiquid() && !block.getType().equals(Material.LAVA))
-        return true;
-
-      return false;
-    };
 
     if (block.getType().equals(Material.WATER))
       return true;
@@ -41,46 +28,71 @@ public class MovementChecker extends BukkitRunnable {
       return ((Waterlogged) block).isWaterlogged();
 
     return false;
-  }
+  };
 
-  private Location getNearbyWaterLocation(Location location) {
+  protected Location getNearbyWaterLocation(Location location) {
     World world = location.getWorld();
-    double x = location.getX(),
-           y = location.getY(),
-           z = location.getZ();
-    for (int x1 = -1; x1 <= 1; x1 ++) {
-      for (int y1 = -1; y1 <= 1; y1 ++) {
-        for (int z1 = -1; z1 <= 1; z1 ++) {
-          Location blockLocation = new Location(world, x + x1, y + y1, z + z1);
-          if (hasWater(blockLocation))
-            return blockLocation.getBlock().getLocation().add(0.5, 0, 0.5);
-        };
-      }
+    double x0 = location.getX(),
+           y0 = location.getY() - 1,
+           z0 = location.getZ();
+    for (int x = -1; x <= 1; x ++) {
+      for (int z1 = -1; z1 <= 1; z1 ++) {
+        Location blockLocation = new Location(world, x0 + x, y0, z0 + z1);
+        if (hasWater(blockLocation))
+          return blockLocation.getBlock().getLocation().add(0.5, 0, 0.5);
+      };
     };
     return null;
   };
 
-  public void start(long interval) {
-    task = this.runTaskTimer(plugin, 0L, interval);
+  protected boolean isSquid(Entity e) {
+    return (e instanceof Squid);
   };
 
-  public void stop() {
-    task.cancel();
+  protected void checkSquids() {
+    plugin.getServer().getWorlds().forEach(world -> {
+      world.getEntities().forEach(e -> {
+        if (!isSquid(e)) {
+          return;
+        };
+
+        if (!hasWater(e.getLocation())) {
+          Location nearbyWaterLocation = getNearbyWaterLocation(e.getLocation());
+          if (nearbyWaterLocation != null)
+            e.teleport(nearbyWaterLocation);
+        };
+      });
+    });
+  };
+};
+
+
+class PreAquaticChecker extends MovementChecker {
+  public PreAquaticChecker(SquidSaverPlugin plugin) {
+    super(plugin);
   };
 
   @Override
-  public void run() {
-    plugin.getServer().getWorlds().forEach(world -> {
-      List<Entity> entities = world.getEntities();
-      for (Entity e : entities) {
-        if (e instanceof Squid) {
-          if (!hasWater(e.getLocation())) {
-            Location nearbyWaterLocation = getNearbyWaterLocation(e.getLocation());
-            if (nearbyWaterLocation != null)
-              e.teleport(nearbyWaterLocation);
-          };
-        };
-      };
-    });
+  protected boolean hasWater(Location location) {
+    Block block = location.getBlock();
+    if (block == null)
+      return false;
+    
+    if (block.isLiquid() && !block.getType().equals(Material.LAVA))
+      return true;
+
+    return false;
   };
-}
+};
+
+
+class PostGlowSquidChecker extends MovementChecker {
+  public PostGlowSquidChecker(SquidSaverPlugin plugin) {
+    super(plugin);
+  };
+
+  @Override
+  protected boolean isSquid(Entity e) {
+    return (e instanceof Squid || e instanceof GlowSquid);
+  };
+};

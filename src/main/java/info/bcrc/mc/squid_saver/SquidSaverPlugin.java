@@ -10,7 +10,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class SquidSaverPlugin extends JavaPlugin {
-  private MovementChecker checker;
+  private SquidSaverRunnable runnable;
   private FileConfiguration config;
   private long checkInterval;
 
@@ -29,15 +29,15 @@ public class SquidSaverPlugin extends JavaPlugin {
   };
 
   private void reload() {
-    checker.stop();
+    runnable.stop();
     loadConfig();
-    checker = new MovementChecker(this);
-    checker.start(checkInterval);
+    runnable = new SquidSaverRunnable(this);
+    runnable.start(checkInterval);
   };
 
   private void showStatus(CommandSender sender) {
     sender.sendMessage(
-      ChatColor.AQUA + "[SquidSaver] Status: checking squid position every "
+      ChatColor.AQUA + "[SquidSaver] Status: checking squid positions every "
       + Long.toString(checkInterval) + " ticks ("+ Double.toString((double) checkInterval / 20) + " seconds)."
     );
   };
@@ -57,7 +57,7 @@ public class SquidSaverPlugin extends JavaPlugin {
             return true;
           case "reload":
             reload();
-            sender.sendMessage(ChatColor.GREEN + "[SquidSaver] Reloaded the config.");
+            sender.sendMessage(ChatColor.GREEN + "[SquidSaver] Config reloaded.");
             showStatus(sender);
             return true;
           case "setinterval":
@@ -87,17 +87,17 @@ public class SquidSaverPlugin extends JavaPlugin {
       return Arrays.asList("status", "reload", "setinterval");
     };
     return null;
-  }
+  };
 
   @Override
   public void onEnable() {
     loadConfig();
-    checker = new MovementChecker(this);
-    checker.start(checkInterval);
+    runnable = new SquidSaverRunnable(this);
+    runnable.start(checkInterval);
   };
 
   @Override
   public void onDisable() {
-    checker.stop();
-  }
+    runnable.stop();
+  };
 };
